@@ -1,0 +1,17 @@
+# Jangan upload file sensitif
+.env
+config.json
+
+# Cache Python
+__pycache__/
+*.pyc
+
+# Virtual environment
+venv/
+
+# File log
+*.log
+
+# File sistem
+.DS_Store
+Thumbs.db
