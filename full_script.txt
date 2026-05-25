@@ -517,22 +517,29 @@ def kirim_analisa_berkala():
         for pair in PAIR_LIST:
             try:
                 hasil_tuple = analisa(pair)
-                if not hasil_tuple:
+
+                if not hasil_tuple or hasil_tuple[0] is None:
                     continue
-                hasil, chart_url = hasil_tuple
+
+                hasil = hasil_tuple[0]
+
                 jam = datetime.now().strftime('%Y-%m-%d %H')
+
                 if last_sent.get(pair) != jam:
                     kirim_ke_target(hasil, pair=pair)
                     log(f"[KIRIM] {pair} dikirim ke target.")
                     last_sent[pair] = jam
                 else:
                     log(f"[LEWAT] {pair} sudah dikirim jam ini.")
-                time.sleep(2)
+
+                time.sleep(3)
+
             except Exception as e:
                 log(f"[ERROR] {pair}: {e}")
                 time.sleep(5)
-        time.sleep(900)
 
+        time.sleep(900)
+             
 @bot.message_handler(commands=['status'])
 def handle_status(message):
     if message.chat.id != ALLOWED_USER:
